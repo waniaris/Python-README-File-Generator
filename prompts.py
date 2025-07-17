@@ -1,27 +1,38 @@
-# from Week6 Rich exercise example, use PyInquirer instead of InquirerPy
-from PyInquirer import prompt
-from rich.console import Console  
-from rich.progress import Progress
+# Reference: Week 6, Rich exercise
+
+from InquirerPy import prompt
+from rich.console import Console
 from rich.table import Table
+from rich.progress import Progress
 import time
 
-console = Console() #  initializing the Rich Console tool so it can be reused later
+# class Project:
+#     def __init__(self, age, height=0):
+#         self.name = name
+#         self.age = age
+#         self.height = 0
+
+#     def display(self):
+#         print(f"Name: {self.name}, Age: {self.age}")
+
+
+console = Console()  # Initialize the Rich Console tool
 
 # Welcome message
 console.print("[bold cyan]Hello! Please provide the details of your GitHub project.[/bold cyan]\n")
 
 # Get user input for README file
-def user_input():
+def input():
     questions = [
         {
             'type': 'input', 
             'name': 'title', 
-            'message': 'Project Title:'
+            'message': 'Title:'
         },
                 {
             'type': 'input', 
             'name': 'description', 
-            'message': 'Project Description:'
+            'message': 'Description:'
         },
         {
             'type': 'input', 
@@ -47,32 +58,30 @@ def user_input():
         {
             'type': 'input', 
             'name': 'contact', 
-            'message': 'Contact Information:'}
+            'message': 'Contact:'
+        }
     ]
     return prompt(questions)
 
 # Get input by calling the function
-user_answers = user_input()
+answers = input()
 
 # Info Received Message
-console.print("\n[bold green] Thank you! Your project details have been collected.[/bold green]\n")
+console.print("\n[bold green]Thank you! Your project details have been collected.[/bold green]\n")
 
 # Create a table to display project details using Rich
-# from Week6 Rich exercise example
-
-table = Table(title="Your Project Summary")
+table = Table(title=answers["title"])
 
 table.add_column("Project Info", style="bold cyan", justify="right")
 table.add_column("Response", style="bold magenta")
 
 # Fill table with info
-table.add_row("Project Title", user_answers["title"])
-table.add_row("Description", user_answers["description"])
-table.add_row("Installation", user_answers["installation"])
-table.add_row("Usage", user_answers["usage"])
-table.add_row("License", user_answers["license"])
-table.add_row("Author", user_answers["author"])
-table.add_row("Contact", user_answers["contact"])
+table.add_row("Description", answers["description"])
+table.add_row("Installation", answers["installation"])
+table.add_row("Usage", answers["usage"])
+table.add_row("License", answers["license"])
+table.add_row("Author", answers["author"])
+table.add_row("Contact", answers["contact"])
 
 console.print(table)
 
@@ -83,5 +92,37 @@ with Progress() as progress:
         time.sleep(0.3)
         progress.update(task, advance=10)
 
-# Success creation message
-console.print("[bold green]README.md generation complete![/bold green] ✅")
+# README content
+content = f"""# {answers['title']}
+
+**Author:** {answers['author']}  
+**Contact:** {answers['contact']}
+
+## Description
+{answers['description']}
+
+## Installation
+{answers['installation']}
+
+## Usage
+{answers['usage']}
+
+## License
+{answers['license']}
+
+"""
+
+# with open("README.md", "w") as file:
+#     file.write(content)w
+
+# console.print("[bold green]README.md generation complete![/bold green] ✅")
+
+try:
+    with open("README.md", "w") as file:
+        file.write(content)
+        
+    # Success creation message
+    console.print("[bold green]README.md generation complete![/bold green] ✅")
+
+except Exception as e:
+    console.print(f"[bold red]Failed to write README.md: {e}[/bold red]")
