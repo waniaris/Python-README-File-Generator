@@ -13,7 +13,7 @@ class ProjectPrompt:
     def __init__(self):
         self.questions = [
             {"type": "input", "name": "title", "message": "Project Title:"},
-            {"type": "input", "name": "description", "message": "Project Description:"},
+            {"type": "input", "name": "description", "message": "Description:"},
             {"type": "input", "name": "installation", "message": "Installation Instructions:"},
             {"type": "input", "name": "usage", "message": "Usage Information:"},
             {
@@ -23,7 +23,7 @@ class ProjectPrompt:
                 "choices": ["MIT", "Apache 2.0", "Boost Software", "None"]
             },
             {"type": "input", "name": "author", "message": "Author Name:"},
-            {"type": "input", "name": "contact", "message": "Contact:"}
+            {"type": "input", "name": "contact", "message": "Contact Information:"}
         ]
         self.answers = {}
 
@@ -53,9 +53,9 @@ if __name__ == "__main__":
 
     # Display answers in console
     project_info = [
-        ("description", "Description"), ("installation", "Installation"),
+        ("description", "Description"), ("installation", "Installation Instructions"),
         ("usage", "Usage"), ("license", "License"),
-        ("author", "Author"), ("contact", "Contact")
+        ("author", "Author Name"), ("contact", "Contact Information")
     ]
     for key, label in project_info:
         table.add_row(label, answers[key])
