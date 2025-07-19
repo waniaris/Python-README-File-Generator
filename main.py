@@ -1,29 +1,49 @@
 from InquirerPy import prompt
 from rich.console import Console
 from rich.table import Table
-from rich.progress import Progress
-import time
-import os
 import writer
 
 
 class ProjectPrompt:
-    """Handles user input for GitHub project details."""
 
     def __init__(self):
         self.questions = [
-            {"type": "input", "name": "title", "message": "Project Title:"},
-            {"type": "input", "name": "description", "message": "Description:"},
-            {"type": "input", "name": "installation", "message": "Installation Instructions:"},
-            {"type": "input", "name": "usage", "message": "Usage Information:"},
+            {
+                "type": "input", 
+                "name": "title", 
+                "message": "Project Title:"
+            },
+            {
+                "type": "input", 
+                "name": "description", 
+                "message": "Description:"
+            },
+            {
+                "type": "input", 
+                "name": "installation", 
+                "message": "Installation Instructions:"
+            },
+            {
+                "type": "input", 
+                "name": "usage", "message": 
+                "Usage Information:"
+            },
             {
                 "type": "list",
                 "name": "license",
                 "message": "Choose a license:",
                 "choices": ["MIT", "Apache 2.0", "Boost Software", "None"]
             },
-            {"type": "input", "name": "author", "message": "Author Name:"},
-            {"type": "input", "name": "contact", "message": "Contact Information:"}
+            {
+                "type": "input", 
+                "name": "author", 
+                "message": "Author Name:"
+            },
+            {
+                "type": "input", 
+                "name": "contact", 
+                "message": "Contact Information:"
+            }
         ]
         self.answers = {}
 
