@@ -3,6 +3,8 @@ from rich.console import Console
 from rich.table import Table
 from rich.progress import Progress
 import time
+import os
+import writer
 
 
 class ProjectPrompt:
@@ -21,7 +23,7 @@ class ProjectPrompt:
                 "choices": ["MIT", "Apache 2.0", "Boost Software", "None"]
             },
             {"type": "input", "name": "author", "message": "Author Name:"},
-            {"type": "input", "name": "contact", "message": "Email:"}
+            {"type": "input", "name": "contact", "message": "Contact:"}
         ]
         self.answers = {}
 
@@ -83,20 +85,10 @@ if __name__ == "__main__":
     
     # Separate content into lines
     lines = content.strip().splitlines()
-    total_lines = len(lines)
 
-    # Show progress bar
-    try:
-        with Progress() as progress:
-            task = progress.add_task("[cyan]Writing to readme.md...", total=total_lines)
-
-            with open("README.md", "w") as file:
-                for line in lines:
-                    file.write(line + "\n")
-                    time.sleep(0.1)
-                    progress.update(task, advance=1)
-
+    status = writer.write_file(lines)
+    
+    if status:
         console.print("[bold green]README.md generation complete![/bold green] ✅")
-
-    except Exception as e:
-        console.print(f"[bold red]README.md generation failed! {e}[/bold red]")
+    else:
+        console.print("[bold red]README.md generation failed![/bold red]")
